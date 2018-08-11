@@ -1,2 +1,2 @@
-FileStreamMySourceTask.class
-FileStreamMySourceConnector.class
+com\connect\FileStreamMySourceTask.class
+com\connect\FileStreamMySourceConnector.class

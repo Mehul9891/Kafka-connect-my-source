@@ -1,5 +1,10 @@
+
 package com.connect;
 
+import org.apache.kafka.common.config.Config;
+import org.apache.kafka.common.config.ConfigDef;
+import org.apache.kafka.common.config.ConfigValue;
+import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.common.utils.AppInfoParser;
 import org.apache.kafka.connect.connector.Task;
 import org.apache.kafka.connect.errors.ConnectException;
@@ -17,6 +22,8 @@ import java.util.Map;
 public class FileStreamMySourceConnector extends SourceConnector {
     public static final String TOPIC_CONFIG = "topic";
     public static final String FILE_CONFIG = "file";
+
+    private static final ConfigDef CONFIG_DEF = new ConfigDef();
 
     private String filename;
     private String topic;
@@ -57,5 +64,17 @@ public class FileStreamMySourceConnector extends SourceConnector {
     public void stop() {
         // Nothing to do since FileStreamSourceConnector has no background monitoring.
     }
+
+    @Override
+    public ConfigDef config() {
+        return CONFIG_DEF;
+    }
+    @Override
+    public Config validate(Map<String, String> connectorConfigs) {
+        ConfigDef configDef = config();
+        List<ConfigValue> configValues = configDef.validate(connectorConfigs);
+        return new Config(configValues);
+    }
+
 
 }
